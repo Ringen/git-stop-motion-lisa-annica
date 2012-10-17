@@ -2,7 +2,26 @@
 
     <string name="app_name">StopMotion</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    
+    <string name="title_activity_main">Stop motion</string>
+    
+    <!-- main menu -->
+    <string name="menu_create_new">Create new</string>
+    
+    <!-- strings specific for the main list -->
+    <string name="main_create_new">Create new movie</string>
+    <string name="main_remove">Remove movie</string>
+    <string name="main_remove_verification">Sure you want to remove this movie?</string>
+    <string name="main_edit">Edit movie</string>
+    <string name="main_play">Play movie</string>
+    
+    <!-- strings specific for creating a new movie -->
+    <string name="create_add">Add new picture</string>
+    <string name="create_finish">Finish</string>
+    
+    <!-- strings specific for the settings -->
+    <string name="settings_hint">Title</string>
+    <string name="settings_save">Save</string>
+    <string name="setting_save_verification">Your stop motion movie is saved!</string>
 
 </resources>
