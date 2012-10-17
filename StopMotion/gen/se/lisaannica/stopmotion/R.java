@@ -33,24 +33,25 @@ public final class R {
         public static final int app_name=0x7f040000;
         /**  strings specific for creating a new movie 
          */
-        public static final int create_add=0x7f040009;
-        public static final int create_finish=0x7f04000a;
+        public static final int create_add=0x7f04000a;
+        public static final int create_finish=0x7f04000b;
         public static final int hello_world=0x7f040001;
+        public static final int main_create_new=0x7f040005;
+        public static final int main_edit=0x7f040008;
         /**  strings specific for the main list 
          */
-        public static final int main_create_new=0x7f040004;
-        public static final int main_edit=0x7f040007;
-        public static final int main_play=0x7f040008;
-        public static final int main_remove=0x7f040005;
-        public static final int main_remove_verification=0x7f040006;
+        public static final int main_empty=0x7f040004;
+        public static final int main_play=0x7f040009;
+        public static final int main_remove=0x7f040006;
+        public static final int main_remove_verification=0x7f040007;
         /**  main menu 
          */
         public static final int menu_create_new=0x7f040003;
-        public static final int setting_save_verification=0x7f04000d;
+        public static final int setting_save_verification=0x7f04000e;
         /**  strings specific for the settings 
          */
-        public static final int settings_hint=0x7f04000b;
-        public static final int settings_save=0x7f04000c;
+        public static final int settings_hint=0x7f04000c;
+        public static final int settings_save=0x7f04000d;
         public static final int title_activity_main=0x7f040002;
     }
     public static final class style {

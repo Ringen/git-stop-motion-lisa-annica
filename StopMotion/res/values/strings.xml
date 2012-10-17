@@ -9,6 +9,7 @@
     <string name="menu_create_new">Create new</string>
     
     <!-- strings specific for the main list -->
+    <string name="main_empty">You have not created any movies yet</string>
     <string name="main_create_new">Create new movie</string>
     <string name="main_remove">Remove movie</string>
     <string name="main_remove_verification">Sure you want to remove this movie?</string>

@@ -16,5 +16,4 @@ public class MovieSettings extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_settings);
 	}
-
 }
