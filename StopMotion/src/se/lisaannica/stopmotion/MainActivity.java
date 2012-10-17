@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 
 /**
- * Hej Lisa Ring
+ * Hej Annica!
  * @author Annica
  *
  */
