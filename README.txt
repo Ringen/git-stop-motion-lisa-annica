@@ -1,0 +1,1 @@
+This project is developed as a part of the course Android for Java programmers autumn 2012. It is developed in eclipse by Lisa Ring and Annica Lindström from Umeå.
