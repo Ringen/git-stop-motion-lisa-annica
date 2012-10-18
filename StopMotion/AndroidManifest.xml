@@ -37,6 +37,10 @@
             android:name=".MovieSettings"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".MoviePlayer"
+            android:label="@string/title_activity_main" >
+        </activity>
     </application>
 
 </manifest>
