@@ -1,19 +1,26 @@
 package se.lisaannica.stopmotion;
 
 import java.io.File;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -108,9 +115,65 @@ public class MovieCreator extends FragmentActivity {
 	 * @param finishButton
 	 */
 	public void finishMovie(View finishButton) {
-		//TODO put an extra or something?
+		
+		//TODO Send list with all captured images to createGif method.
+		File gif = createGif();
+		
+		//TODO Replace this with the second commented part. Should the path be extra or the file or what?
+		//Maybe the whole list, and the gif creating takes part in the MovieSettings class instead
+		//so that naming it wont be a problem?
+		//The next four lines are only for testing.
+		/*Intent intent = new Intent(MovieCreator.this, MoviePlayer.class);
+		intent.putExtra("gifPath", gif.getPath());
+		startActivity(intent);*/
+		
 		Intent intent = new Intent(MovieCreator.this, MovieSettings.class);
+		intent.putExtra("gifPath", gif.getPath());
 		this.startActivity(intent);
+	}
+	
+	/**
+	 * Creates a gif file.
+	 * 
+	 * @return gif file
+	 */
+	public File createGif()
+	{ 
+		AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+		
+		//TODO Create bitmaps for all the captured images.
+		Bitmap icon = BitmapFactory.decodeResource(this.getResources(), 
+                R.drawable.ic_action_search); 
+		Bitmap ic = BitmapFactory.decodeResource(this.getResources(), 
+                R.drawable.ic_launcher);
+		
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+		File gif = new File(imageStorageDir.getPath() + File.separator +
+				"stopmotion_"+ timeStamp + ".gif");
+		
+		OutputStream os;
+		try {
+			os = new FileOutputStream(gif);
+			
+			encoder.start(os);
+			encoder.setDelay(1000);
+			
+			//TODO Add all the bitmaps.
+			encoder.addFrame(icon);
+			encoder.addFrame(ic);
+			encoder.finish();
+			
+			os.flush();
+			os.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Could not find the gif file.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return gif;
 	}
 
 	/**
