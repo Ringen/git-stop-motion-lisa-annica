@@ -1,19 +1,17 @@
 package se.lisaannica.stopmotion;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,17 +21,24 @@ import android.widget.Toast;
  * @author Lisa Ring and Annica Lindstrom
  *
  */
-public class MovieCreator extends Activity {
+public class MovieCreator extends FragmentActivity {
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;	//Code for photo
 	private Uri imageFile;												//Image to save the captured image in.
 	private File imageStorageDir;										//Direction to where the stored images are.
+	
+	private ImagePagerAdapter pagerAdapter;
+	private ViewPager viewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_creator);
+		
+		pagerAdapter = new ImagePagerAdapter(getSupportFragmentManager());
+		viewPager = (ViewPager) findViewById(R.id.viewPager);
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setCurrentItem(0);
 		
 		imageStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionImages");
 	}
@@ -57,6 +62,13 @@ public class MovieCreator extends Activity {
 					this, 
 					"The SD-card is not correctly mounted, please fix this before taking pictures ",  
 					Toast.LENGTH_LONG).show();
+	}
+	
+	/**
+	 * Create a new fragment to hold a new image
+	 */
+	private void addFragment(Uri imageUri) {
+		pagerAdapter.addImage(imageUri);
 	}
 
 	/**
@@ -112,8 +124,7 @@ public class MovieCreator extends Activity {
 			if (resultCode == RESULT_OK) {
 				
 				//Sets the capture image.
-				ImageView iv = (ImageView) findViewById(R.id.image);
-				iv.setImageURI(imageFile);
+				addFragment(imageFile);
 			} 
 			else if (resultCode == RESULT_CANCELED) {
 			} 

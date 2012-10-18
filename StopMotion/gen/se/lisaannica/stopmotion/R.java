@@ -15,11 +15,11 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int button_add=0x7f070003;
-        public static final int button_finish=0x7f070004;
-        public static final int button_save=0x7f070006;
-        public static final int editText_title=0x7f070005;
-        public static final int image=0x7f070002;
+        public static final int button_add=0x7f070002;
+        public static final int button_finish=0x7f070003;
+        public static final int button_save=0x7f070005;
+        public static final int editText_title=0x7f070004;
+        public static final int imageView=0x7f070006;
         public static final int menu_create_new=0x7f070008;
         public static final int pager_title_strip=0x7f070001;
         public static final int textView_test=0x7f070007;
@@ -31,6 +31,7 @@ public final class R {
         public static final int activity_movie_settings=0x7f030002;
         public static final int fragment_content=0x7f030003;
         public static final int image_fragment=0x7f030004;
+        public static final int test_fragment_content=0x7f030005;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;
