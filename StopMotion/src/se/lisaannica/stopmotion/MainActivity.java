@@ -53,7 +53,8 @@ public class MainActivity extends ListActivity {
     	// TODO Auto-generated method stub
     	
     	if(item.getItemId() == R.id.menu_create_new) {
-    		Intent intent = new Intent(MainActivity.this, MovieCreator.class);
+    		//TODO change back to MovieCreator
+    		Intent intent = new Intent(MainActivity.this, NewMovieCreator.class);
     		this.startActivity(intent);
     	}
     	

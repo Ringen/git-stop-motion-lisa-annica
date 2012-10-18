@@ -28,6 +28,11 @@
             android:name=".MovieCreator"
             android:label="@string/title_activity_main" >
         </activity>
+        <!-- remove this!! -->
+        <activity
+            android:name=".NewMovieCreator"
+            android:label="@string/title_activity_main" >
+        </activity>
         <activity
             android:name=".MovieSettings"
             android:label="@string/title_activity_main" >
