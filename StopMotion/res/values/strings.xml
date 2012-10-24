@@ -5,8 +5,19 @@
     
     <string name="title_activity_main">Stop motion</string>
     
+    <!-- twitter access -->
+    <string name="twitter_consumer_key"></string>
+    <string name="twitter_consumer_secret">xKFBxr77tTW4HwhwgbVeUAkayA3PoSuIr6URVpaM8o</string>
+    <string name="twitter_request_token_url"></string>
+    <string name="twitter_authorize_url"></string>
+    <string name="twitter_access_token_url"></string>
+    
+    <!-- post images on twitter -->
+    <string name="twitpic_api_key">b5d33c6832c60e1f920efe96ca5cabaf</string>
+    
     <!-- main menu -->
     <string name="menu_create_new">Create new</string>
+    <string name="menu_share">Share on twitter</string>
     
     <!-- strings specific for the main list -->
     <string name="main_empty">You have not created any movies yet</string>

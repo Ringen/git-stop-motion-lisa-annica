@@ -41,6 +41,10 @@
             android:name=".MoviePlayer"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".TwitterConnection"
+            android:label="@string/title_activity_main" >
+        </activity>
     </application>
 
 </manifest>

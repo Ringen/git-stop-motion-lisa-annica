@@ -51,11 +51,11 @@ public class MainActivity extends ListActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	// TODO Auto-generated method stub
-    	
     	if(item.getItemId() == R.id.menu_create_new) {
-    		//TODO change back to MovieCreator
     		Intent intent = new Intent(MainActivity.this, MovieCreator.class);
+    		this.startActivity(intent);
+    	} else if(item.getItemId() == R.id.menu_share) {
+    		Intent intent = new Intent(MainActivity.this, TwitterConnection.class);
     		this.startActivity(intent);
     	}
     	
