@@ -1,57 +1,72 @@
 package se.lisaannica.stopmotion;
 
-import java.util.ArrayList;
-
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * Adapter to handle all the images to be shown in the view pager
- * @author Lisa
+ * @author Lisa Ring
  *
  */
-public class ImagePagerAdapter extends FragmentPagerAdapter {
-	private ArrayList<ImageFragment> fragments;
-	
-	public ImagePagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new ArrayList<ImageFragment>();
+public class ImagePagerAdapter extends PagerAdapter {
+	private SparseArray<Bitmap> images;
+	private LayoutInflater inflater;
+
+	public ImagePagerAdapter() {
+		super();
+		images = new SparseArray<Bitmap>();
 	}
 	
 	/**
-	 * Add an image fragment that should be displayed in the page view
+	 * Add a bitmap to the list of images
+	 * @param image
 	 */
-	public void addImage(Uri imageUri) {
-		fragments.add(new ImageFragment(imageUri));
-	}
-
-	@Override
-	public Fragment getItem(int pos) {
-		return fragments.get(pos);
+	public void addImage(Bitmap image) {
+		Log.d("show", "ImagePagerAdapter, addImage " + image);
+		images.put(images.size(), image);
 	}
 
 	@Override
 	public int getCount() {
-		return fragments.size();
+		return images.size();
 	}
 	
 	@Override
-	public Object instantiateItem(ViewGroup container, int position) {
-		// TODO Auto-generated method stub
-		Log.d("leak", "ImagePagerAdapter, instantiateItem " + position);
-		return super.instantiateItem(container, position);
-	}
-	
-	@Override
-	public void destroyItem(ViewGroup container, int position, Object object) {
-		// TODO Auto-generated method stub
-		Log.d("leak", "ImagePagerAdapter, destroyItem " + position);
-		super.destroyItem(container, position, object);
+	public Object instantiateItem(ViewGroup viewPager, int position) {
+		/*called on an item in the viewpager that becomes the neighbor to
+		 * the current page (when swiping)*/
+		Log.d("show", "ImagePagerAdapter, instantiateItem " + position);
 		
+		if(inflater == null){
+			inflater = (LayoutInflater) viewPager.getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		}
+		View root = inflater.inflate(R.layout.fragment_content, null, false);
+		ImageView imageView = (ImageView) root.findViewById(R.id.imageView);
+		imageView.setImageBitmap(images.get(position));
+		
+		viewPager.addView(imageView);
+		
+		return imageView;
+	}
+	
+	@Override
+	public void destroyItem(ViewGroup viewPager, int position, Object object) {
+		Log.d("show", "ImagePagerAdapter, destroyItem " + position);
+		/*called on an item in the viewpager that no longer is a neighbor 
+		 * to the current page (when swiping)*/
+		viewPager.removeView((View) object);
+	}
+
+	@Override
+	public boolean isViewFromObject(View view, Object obj) {
+		return view == ((ImageView) obj);
 	}
 }

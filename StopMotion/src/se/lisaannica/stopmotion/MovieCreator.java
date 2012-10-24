@@ -5,21 +5,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,7 +35,7 @@ import android.widget.Toast;
  * @author Lisa Ring and Annica Lindstrom
  *
  */
-public class MovieCreator extends FragmentActivity {
+public class MovieCreator extends Activity {
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;	//Code for photo
 	private Uri imageFile;												//Image to save the captured image in.
@@ -42,10 +49,9 @@ public class MovieCreator extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_creator);
 		
-		pagerAdapter = new ImagePagerAdapter(getSupportFragmentManager());
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
+		pagerAdapter = new ImagePagerAdapter();
 		viewPager.setAdapter(pagerAdapter);
-		viewPager.setCurrentItem(0);
 		
 		imageStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionImages");
 	}
@@ -57,8 +63,8 @@ public class MovieCreator extends FragmentActivity {
 	public void addPic(View addButton) {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		//Creates a file where the captured image can be stored and put it as
-		//an extra to the camera intent.
+		/*Creates a file where the captured image can be stored and put it 
+		 * as an extra to the camera intent.*/
 		imageFile = createFileForStorage();
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFile);
 
@@ -71,13 +77,6 @@ public class MovieCreator extends FragmentActivity {
 					Toast.LENGTH_LONG).show();
 	}
 	
-	/**
-	 * Create a new fragment to hold a new image
-	 */
-	private void addFragment(Uri imageUri) {
-		pagerAdapter.addImage(imageUri);
-	}
-
 	/**
 	 * Creates a file where the captured image can be stored.
 	 * @return file for storage or null if the SD-card is not correctly mounted.
@@ -181,13 +180,37 @@ public class MovieCreator extends FragmentActivity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d("show", "MovieCreator, onActivityResult RESULT_OK: " 
+				+ RESULT_OK + ", resultCode: " + resultCode);
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				
 				//Sets the capture image.
-				addFragment(imageFile);
+//				addFragment(imageFile.toString());
+				
+//				ImageResizeTask task = new ImageResizeTask();
+//				task.execute(imageFile.toString());
+				
+				//get the image from the camera
+				Bitmap photo = null;
+				if(data != null) {
+					photo = (Bitmap) data.getExtras().get("data");
+				} else {
+					try {
+						photo = BitmapFactory.decodeStream(getContentResolver()
+								.openInputStream(imageFile));
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						Log.d("show", "MovieCreator, onActivityResult, FileNotFoundException");
+						e.printStackTrace();
+					}
+				}
+				
+				//set the image on the screen
+	            pagerAdapter.addImage(resizeImage(photo));
+	            pagerAdapter.notifyDataSetChanged();
 			} 
 			else if (resultCode == RESULT_CANCELED) {
 			} 
@@ -198,5 +221,17 @@ public class MovieCreator extends FragmentActivity {
 						Toast.LENGTH_LONG).show();
 			}
 		}
+	}
+	
+	/**
+	 * Resizes a bitmap
+	 * @param original bitmap
+	 * @return resized bitmap
+	 */
+	private Bitmap resizeImage(Bitmap original) {
+		int width = original.getWidth()/4;
+		int height = original.getHeight()/4;
+		
+		return Bitmap.createScaledBitmap(original, width, height, true);
 	}
 }
