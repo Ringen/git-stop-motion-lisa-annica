@@ -36,6 +36,7 @@ public class MainActivity extends ListActivity {
         movies.add("Movie 4");
 
         //TODO should we create our own adapter?
+        //If we have time we can prettyfy it.
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, movies);
         setListAdapter(adapter);
         
@@ -81,6 +82,11 @@ public class MainActivity extends ListActivity {
     	if(item.getItemId() == 0) {
     		//TODO play the movie
     		Log.d("main", "MainActivity, onContextItemSelected, item: " + item.getItemId());
+    		
+    		Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
+    		intent.putExtra("gifName", item.getTitle());
+    		this.startActivity(intent);
+    		
     	}
     	
     	return super.onContextItemSelected(item);

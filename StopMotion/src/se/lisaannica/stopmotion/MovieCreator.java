@@ -43,6 +43,8 @@ public class MovieCreator extends Activity {
 	
 	private ImagePagerAdapter pagerAdapter;
 	private ViewPager viewPager;
+	
+	private String gifName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +117,6 @@ public class MovieCreator extends Activity {
 	 */
 	public void finishMovie(View finishButton) {
 		
-		//TODO Send list with all captured images to createGif method.
 		File gif = createGif();
 		
 		//TODO Replace this with the second commented part. Should the path be extra or the file or what?
@@ -148,8 +149,9 @@ public class MovieCreator extends Activity {
 		
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
+		gifName = "stopmotion_" + timeStamp;
 		File gif = new File(imageStorageDir.getPath() + File.separator +
-				"stopmotion_"+ timeStamp + ".gif");
+				gifName + ".gif");
 		
 		OutputStream os;
 		try {
