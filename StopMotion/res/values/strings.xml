@@ -6,11 +6,14 @@
     <string name="title_activity_main">Stop motion</string>
     
     <!-- twitter access -->
-    <string name="twitter_consumer_key"></string>
+    <string name="twitter_consumer_key">rWOOhjoKG2BDKrFshY6Q</string>
     <string name="twitter_consumer_secret">xKFBxr77tTW4HwhwgbVeUAkayA3PoSuIr6URVpaM8o</string>
-    <string name="twitter_request_token_url"></string>
-    <string name="twitter_authorize_url"></string>
-    <string name="twitter_access_token_url"></string>
+    <string name="twitter_request_token_url">https://api.twitter.com/oauth/request_token</string>
+    <string name="twitter_authorize_url">https://api.twitter.com/oauth/authorize</string>
+    <string name="twitter_access_token_url">https://api.twitter.com/oauth/access_token</string>
+    
+    <string name="twitter_access_token">296734281-fHgj2EQAOb74poSpZfHo6ejTKU5hV8KhRSCNbkls</string>
+    <string name="twitter_access_secret">afKfJI9IMPrseYxj01NYqOTTQzyDZYQw7XZfCjl2JU</string>
     
     <!-- post images on twitter -->
     <string name="twitpic_api_key">b5d33c6832c60e1f920efe96ca5cabaf</string>
@@ -35,5 +38,11 @@
     <string name="settings_hint">Title</string>
     <string name="settings_save">Save</string>
     <string name="setting_save_verification">Your stop motion movie is saved!</string>
+    
+    <!-- strings specific for twitter connection activity -->
+    <string name="twitter_login_instruction">You have to login to twitter</string>
+    <string name="twitter_hint_username">Username or e-mail</string>
+    <string name="twitter_hint_password">Password</string>
+    <string name="twitter_button_login">Login</string>
 
 </resources>
