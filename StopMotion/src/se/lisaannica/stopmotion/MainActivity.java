@@ -27,19 +27,21 @@ import android.widget.ListAdapter;
  */
 public class MainActivity extends ListActivity {
 	private List<String> movies;
+	private File movieStorageDir;
+	private ArrayAdapter<String> adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		File files = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionMovies");
+		movieStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionMovies");
 
-		movies = setMovieList(files);
+		movies = setMovieList(movieStorageDir);
 		
 		//TODO should we create our own adapter?
 		//If we have time we can prettyfy it.
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, movies);
+		adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, movies);
 		setListAdapter(adapter);
 
 		registerForContextMenu(getListView());
@@ -93,7 +95,7 @@ public class MainActivity extends ListActivity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			menu.setHeaderTitle(movies.get(info.position).toString());
 			menu.add(0, 0, 0, getResources().getString(R.string.main_play));
-			//			menu.add(0, 1, 0, getResources().getString(R.string.main_remove));
+			menu.add(0, 1, 0, getResources().getString(R.string.main_remove));
 			//			menu.add(0, 2, 0, getResources().getString(R.string.main_edit));
 		}
 	}
@@ -102,13 +104,33 @@ public class MainActivity extends ListActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		
-		if(item.getItemId() == 0) {
+		if(item.getItemId() == 0) { //Play movie
 			Log.d("main", "MainActivity, onContextItemSelected, item: " + item.getItemId());
 
 			Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
 			intent.putExtra("gifName", movies.get(info.position));
 			this.startActivity(intent);
+		} else if (item.getItemId() == 1) { //Remove movie
+			deleteMovie(movies.get((info.position)));
 		}
 		return super.onContextItemSelected(item);
+	}
+	
+	/**
+	 * Deletes the selected movie.
+	 * @param movieName
+	 */
+	private void deleteMovie(String movieName)
+	{
+		File gif = new File(movieStorageDir.getPath() + File.separator +
+				movieName + ".gif");
+		gif.delete();
+		
+		for(int i = 0; i < movies.size(); i++) {
+			if(movieName.equals(movies.get(i))) {
+				movies.remove(i);
+			}	
+		}
+		adapter.remove(movieName);
 	}
 }
