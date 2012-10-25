@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 
 /**
@@ -31,17 +32,21 @@ public class MoviePlayer extends Activity {
 		setContentView(R.layout.activity_movie_player);
 		
 		Intent intent = getIntent();
-		String gifPath = intent.getStringExtra("gifPath");
-		
-		//String gifName = intent.getStringExtra("gifName");
+		String gifName = intent.getStringExtra("gifName");
 		
 		File imageStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), 
-										"StopMotionImages");
+										"StopMotionMovies");
 		
-		SurfaceView sv = (SurfaceView)findViewById(R.id.gif_view);
+		File gifFile = new File(imageStorageDir.getPath() + File.separator + gifName + ".gif");
 		
-		GifRun gr = new GifRun();
-		gr.LoadGiff(sv, this, gifPath);
-		//gr.LoadGiff(sv, this, imageStorageDir.getPath() + File.separator + gifName);
+		if (gifFile.exists())
+		{
+			SurfaceView sv = (SurfaceView)findViewById(R.id.gif_view);
+			
+			GifRun gr = new GifRun();
+			gr.LoadGiff(sv, this, gifFile.getPath());
+		} else {
+			Toast.makeText(this, "The gif you chose does not exist.", Toast.LENGTH_LONG).show();
+		}		
 	}
 }
