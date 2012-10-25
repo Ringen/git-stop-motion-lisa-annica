@@ -42,7 +42,7 @@ public class MovieSettings extends Activity {
 
 		imageList = setImageList(images);
 	}
-	
+
 	/**
 	 * Sets the list with all the photos captured.
 	 * 
@@ -74,14 +74,33 @@ public class MovieSettings extends Activity {
 		EditText et = (EditText) findViewById(R.id.editText_title);
 		String gifName = et.getText().toString();
 
-		createGif(gifName);
-		cleanImagesFolder();
+		if (onlyLetters(gifName)) {
+			createGif(gifName);
+			cleanImagesFolder();
 
-		Toast.makeText(this, "Your stop motion movie " + gifName + " has now been saved.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Your stop motion movie " + gifName + " has now been saved.", Toast.LENGTH_LONG).show();
 
-		Intent intent = Intent.makeRestartActivityTask(
-				new ComponentName("se.lisaannica.stopmotion","se.lisaannica.stopmotion.MainActivity"));
-		startActivity(intent); 
+			Intent intent = Intent.makeRestartActivityTask(
+					new ComponentName("se.lisaannica.stopmotion","se.lisaannica.stopmotion.MainActivity"));
+			startActivity(intent); 
+		} else {
+			Toast.makeText(this, "The name can only contain letters a-z.", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	/**
+	 * Method to control the name of the movie.
+	 * @param name
+	 * @return true if it only contain letters a-z
+	 */
+	private boolean onlyLetters(String name)
+	{
+		for(int i = 0; i < name.length(); i++) {
+			if (!Character.isLetter(name.charAt(i))) { 
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -104,7 +123,7 @@ public class MovieSettings extends Activity {
 				System.out.println("Failed to create directory for images.");
 			}
 		}
-		
+
 		//File where the gif will be saved.
 		File gif = new File(movieStorageDir.getPath() + File.separator +
 				gifName + ".gif");
@@ -132,7 +151,7 @@ public class MovieSettings extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Deletes all the captured photos. This for saving memory.
 	 */
