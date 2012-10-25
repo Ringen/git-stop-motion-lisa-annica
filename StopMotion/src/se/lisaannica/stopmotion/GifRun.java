@@ -57,9 +57,9 @@ public class GifRun implements Runnable, Callback {
 				mSurfaceHolder.unlockCanvasAndPost(rCanvas);
 				bmb = decode.next();
 
-				Thread.sleep(100);
+				Thread.sleep(300);
 			} catch (Exception ex) {
-
+				ex.printStackTrace();
 			}
 		}
 
