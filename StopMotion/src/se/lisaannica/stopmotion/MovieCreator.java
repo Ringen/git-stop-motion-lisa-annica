@@ -108,8 +108,16 @@ public class MovieCreator extends Activity {
 	 */
 	public void finishMovie(View finishButton) {		
 		Intent intent = new Intent(MovieCreator.this, MovieSettings.class);
-		intent.putExtra("images", pagerAdapter.getImages().toArray());
-		this.startActivity(intent);
+		
+		if (pagerAdapter.getImages().size() > 0) {
+			intent.putExtra("images", pagerAdapter.getImages().toArray());
+			this.startActivity(intent);
+		} else {
+			Toast.makeText(
+					this, 
+					"You have to take pictures before you can create a stop motion movie.", 
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	/**
