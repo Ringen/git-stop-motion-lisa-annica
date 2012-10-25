@@ -33,6 +33,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 	 */
 	public void addImage(Bitmap image) {
 		Log.d("show", "ImagePagerAdapter, addImage " + image);
+		Log.d("show", "ImagePagerAdapter, addImage, height: " + image.getHeight() + ", width: " + image.getWidth());
 		images.add(image);
 	}
 	

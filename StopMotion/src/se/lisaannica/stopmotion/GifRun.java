@@ -65,22 +65,16 @@ public class GifRun implements Runnable, Callback {
 
 	}
 
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) 
-	{
-
-
-
-	}
-
-	public void surfaceCreated(SurfaceHolder holder) 
-	{
-
-	}
-
 	public void surfaceDestroyed(SurfaceHolder holder) {
-
 		surfaceExists=false;
+	}
+
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+	}
+
+	public void surfaceCreated(SurfaceHolder arg0) {
+		// TODO Auto-generated method stub
 	}
 
 }

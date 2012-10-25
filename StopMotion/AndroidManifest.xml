@@ -21,17 +21,12 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MovieCreator"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <!-- remove this!! -->
-        <activity
-            android:name=".NewMovieCreator"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
