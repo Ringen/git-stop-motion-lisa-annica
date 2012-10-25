@@ -1,5 +1,8 @@
 package se.lisaannica.stopmotion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
@@ -16,12 +19,12 @@ import android.widget.ImageView;
  *
  */
 public class ImagePagerAdapter extends PagerAdapter {
-	private SparseArray<Bitmap> images;
+	private List<Bitmap> images;
 	private LayoutInflater inflater;
 
 	public ImagePagerAdapter() {
 		super();
-		images = new SparseArray<Bitmap>();
+		images = new ArrayList<Bitmap>();
 	}
 	
 	/**
@@ -30,7 +33,16 @@ public class ImagePagerAdapter extends PagerAdapter {
 	 */
 	public void addImage(Bitmap image) {
 		Log.d("show", "ImagePagerAdapter, addImage " + image);
-		images.put(images.size(), image);
+		images.add(image);
+	}
+	
+	/**
+	 * Returns the array with images.
+	 * @return
+	 */
+	public List<Bitmap> getImages()
+	{
+		return images;
 	}
 
 	@Override
