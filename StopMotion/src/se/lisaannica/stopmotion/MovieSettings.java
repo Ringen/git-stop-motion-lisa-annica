@@ -11,12 +11,16 @@ import java.util.List;
 import java.util.TreeSet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,7 +46,7 @@ public class MovieSettings extends Activity {
 
 		imageList = setImageList(images);
 	}
-	
+
 	/**
 	 * Sets the list with all the photos captured.
 	 * 
@@ -104,7 +108,7 @@ public class MovieSettings extends Activity {
 				System.out.println("Failed to create directory for images.");
 			}
 		}
-		
+
 		//File where the gif will be saved.
 		File gif = new File(movieStorageDir.getPath() + File.separator +
 				gifName + ".gif");
@@ -132,7 +136,7 @@ public class MovieSettings extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Deletes all the captured photos. This for saving memory.
 	 */
@@ -147,5 +151,40 @@ public class MovieSettings extends Activity {
 				file.delete();
 			}
 		}
+	}
+
+	/**
+	 * Go back to the main activity without saving the movie
+	 * @param button
+	 */
+	public void discardPic(View button) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(MovieSettings.this);
+
+		//strings for the dialog
+		String dialogText = getResources().getString(R.string.settings_discard_msg);
+		String positiveText = getResources().getString(R.string.settings_yes);
+		String negativeText = getResources().getString(R.string.settings_no);
+
+		//set strings for message and buttons in dialog
+		builder.setMessage(dialogText);
+		builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				Log.d("settings", "positive button");
+				//remove images from folder
+				cleanImagesFolder();
+
+				//go back to main activity without possibilities to go back
+				Intent intent = Intent.makeRestartActivityTask(
+						new ComponentName("se.lisaannica.stopmotion","se.lisaannica.stopmotion.MainActivity"));
+				startActivity(intent);
+			}
+		});
+
+		//do nothing but close the dialog
+		builder.setNegativeButton(negativeText, null);
+
+		//show the dialog
+		builder.create().show();
 	}
 }
