@@ -2,9 +2,6 @@ package se.lisaannica.stopmotion;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,8 +31,6 @@ public class MovieCreator extends Activity {
 	
 	private ImagePagerAdapter pagerAdapter;
 	private ViewPager viewPager;
-	
-	private String gifName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class MovieCreator extends Activity {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 		/*Creates a file where the captured image can be stored and put it 
-		 * as an extra to the camera intent.*/
+		  as an extra to the camera intent.*/
 		imageFile = createFileForStorage();
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFile);
 
@@ -81,15 +76,14 @@ public class MovieCreator extends Activity {
 			return null;
 
 		//Creates the directory if it does not exists.
-		if (!imageStorageDir.exists()){
+		if (!imageStorageDir.exists()) {
 			System.out.println("Directory does not exist.");
 
 			//TODO find out what this does.
-			if (!imageStorageDir.mkdirs()){
+			if (!imageStorageDir.mkdirs()) {
 				System.out.println("Failed to create directory for images.");
 			}
-		}
-		else {
+		} else {
 			System.out.println("Directory exists.");
 		}
 
@@ -106,66 +100,10 @@ public class MovieCreator extends Activity {
 	 * Method called by pressing the finish-button.
 	 * @param finishButton
 	 */
-	public void finishMovie(View finishButton) {
-		
-		File gif = createGif();
-		
-		//TODO Replace this with the second commented part. Should the path be extra or the file or what?
-		//Maybe the whole list, and the gif creating takes part in the MovieSettings class instead
-		//so that naming it wont be a problem?
-		//The next four lines are only for testing.
-		/*Intent intent = new Intent(MovieCreator.this, MoviePlayer.class);
-		intent.putExtra("gifPath", gif.getPath());
-		startActivity(intent);*/
-		
+	public void finishMovie(View finishButton) {		
 		Intent intent = new Intent(MovieCreator.this, MovieSettings.class);
-		intent.putExtra("gifPath", gif.getPath());
+		intent.putExtra("images", pagerAdapter.getImages().toArray());
 		this.startActivity(intent);
-	}
-	
-	/**
-	 * Creates a gif file.
-	 * 
-	 * @return gif file
-	 */
-	public File createGif()
-	{ 
-		AnimatedGifEncoder encoder = new AnimatedGifEncoder();
-		
-		//TODO Create bitmaps for all the captured images.
-		Bitmap icon = BitmapFactory.decodeResource(this.getResources(), 
-                R.drawable.ic_action_search); 
-		Bitmap ic = BitmapFactory.decodeResource(this.getResources(), 
-                R.drawable.ic_launcher);
-		
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-		gifName = "stopmotion_" + timeStamp;
-		File gif = new File(imageStorageDir.getPath() + File.separator +
-				gifName + ".gif");
-		
-		OutputStream os;
-		try {
-			os = new FileOutputStream(gif);
-			
-			encoder.start(os);
-			encoder.setDelay(1000);
-			
-			//TODO Add all the bitmaps.
-			encoder.addFrame(icon);
-			encoder.addFrame(ic);
-			encoder.finish();
-			
-			os.flush();
-			os.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Could not find the gif file.");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return gif;
 	}
 
 	/**
@@ -195,7 +133,6 @@ public class MovieCreator extends Activity {
 						photo = BitmapFactory.decodeStream(getContentResolver()
 								.openInputStream(imageFile));
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
 						Log.d("show", "MovieCreator, onActivityResult, FileNotFoundException");
 						e.printStackTrace();
 					}
@@ -204,10 +141,8 @@ public class MovieCreator extends Activity {
 				//set the image on the screen
 	            pagerAdapter.addImage(resizeImage(photo));
 	            pagerAdapter.notifyDataSetChanged();
-			} 
-			else if (resultCode == RESULT_CANCELED) {
-			} 
-			else {
+			} else if (resultCode == RESULT_CANCELED) {
+			} else {
 				Toast.makeText(
 						this, 
 						"Something went wrong with the camera, please try again.",  
