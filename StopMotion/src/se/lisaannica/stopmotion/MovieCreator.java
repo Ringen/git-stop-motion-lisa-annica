@@ -16,6 +16,8 @@ import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -29,6 +31,7 @@ public class MovieCreator extends Activity {
 	private Uri imageFile;												//Image to save the captured image in.
 	private File imageStorageDir;										//Direction to where the stored images are.
 	
+	private TextView instruction;
 	private ImagePagerAdapter pagerAdapter;
 	private ViewPager viewPager;
 
@@ -36,6 +39,9 @@ public class MovieCreator extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_creator);
+		
+		//instructions to be visible when no images added
+		instruction = (TextView) findViewById(R.id.textView_create_instruction);
 		
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		pagerAdapter = new ImagePagerAdapter();
@@ -126,12 +132,6 @@ public class MovieCreator extends Activity {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				
-				//Sets the capture image.
-//				addFragment(imageFile.toString());
-				
-//				ImageResizeTask task = new ImageResizeTask();
-//				task.execute(imageFile.toString());
-				
 				//get the image from the camera
 				Bitmap photo = null;
 				if(data != null) {
@@ -145,6 +145,9 @@ public class MovieCreator extends Activity {
 						e.printStackTrace();
 					}
 				}
+				
+				//remove the instruction
+				instruction.setText("");
 				
 				//set the image on the screen
 	            pagerAdapter.addImage(resizeImage(photo));
