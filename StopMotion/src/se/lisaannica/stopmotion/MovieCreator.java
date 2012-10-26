@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 /**
  * Create a new stop motion movie.
- * @author Lisa Ring and Annica Lindstrom
+ * @author Lisa Ring and Annica Lindström
  *
  */
 public class MovieCreator extends Activity {
