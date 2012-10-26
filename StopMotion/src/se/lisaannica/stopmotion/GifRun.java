@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -46,10 +47,11 @@ public class GifRun implements Runnable, Callback {
 
 	public void run() 
 	{
+		Canvas rCanvas;
 		while (surfaceExists) {
 			try {
 
-				Canvas rCanvas = mSurfaceHolder.lockCanvas();
+				rCanvas = mSurfaceHolder.lockCanvas();
 				rCanvas.drawBitmap(bmb, 0, 0, new Paint());
 				//ImageView im = (ImageView) findViewById(R.id.imageView1);
 				//im.setImageBitmap(bmb);
