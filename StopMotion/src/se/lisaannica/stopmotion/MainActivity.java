@@ -4,21 +4,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
-import android.os.Environment;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 /**
  * List of stop motion movies.
