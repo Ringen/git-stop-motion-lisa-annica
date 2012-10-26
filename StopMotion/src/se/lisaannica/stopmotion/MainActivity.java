@@ -3,18 +3,17 @@ package se.lisaannica.stopmotion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.app.ListActivity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.app.ListActivity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
@@ -91,8 +90,8 @@ public class MainActivity extends ListActivity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			menu.setHeaderTitle(movies.get(info.position).toString());
 			menu.add(0, 0, 0, getResources().getString(R.string.main_play));
-			menu.add(0, 1, 0, getResources().getString(R.string.main_remove));
-			menu.add(0, 2, 0, getResources().getString(R.string.main_share));
+			menu.add(0, 1, 0, getResources().getString(R.string.main_share));
+			menu.add(0, 2, 0, getResources().getString(R.string.main_remove));
 		}
 	}
 
@@ -107,9 +106,9 @@ public class MainActivity extends ListActivity {
 			Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
 			intent.putExtra("gifName", movieName);
 			this.startActivity(intent);
-		} else if (item.getItemId() == 1) { //Remove movie
+		} else if (item.getItemId() == 2) { //Remove movie
 			deleteMovie(movieName);
-		} else if (item.getItemId() == 2) {
+		} else if (item.getItemId() == 1) {
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
 			Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
 			

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +40,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 	 * Returns the array with images.
 	 * @return
 	 */
-	public List<Bitmap> getImages()
-	{
+	public List<Bitmap> getImages() {
 		return images;
 	}
 
