@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +12,8 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -30,17 +30,18 @@ import android.widget.Toast;
  */
 public class MovieSettings extends Activity {
 
-	private List<Bitmap> imageList;
+	private List<String> imageList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_settings);
 
+		Log.d("show", "Started settings");
+		
 		Intent intent = getIntent();
-		Serializable images = intent.getSerializableExtra("images");
-
-		imageList = setImageList(images);
+		imageList = intent.getStringArrayListExtra("imageList");
+		//imageList = setImageList(images);
 	}
 
 	/**
@@ -49,20 +50,21 @@ public class MovieSettings extends Activity {
 	 * @param images
 	 * @return
 	 */
-	private List<Bitmap> setImageList(Serializable images)
+	/*private List<Bitmap> setImageList(Serializable images)
 	{
+		Log.d("show", "Set image list");
 		List<Bitmap> list = new ArrayList<Bitmap>();
 		Object[] o = (Object[]) images;
 		if (o != null) {
 			for (int i = 0; i < o.length; i++) {
 				if (o[i] instanceof Bitmap) {
-					System.out.println("Is bitmap");
+					Log.d("show", "Adding bitmap");
 					list.add((Bitmap) o[i]);
 				}
 			}
 		}
 		return list;
-	}
+	}*/
 
 	/**
 	 * Method called by pressing the save-button.
@@ -134,9 +136,12 @@ public class MovieSettings extends Activity {
 
 			encoder.start(os);
 
+			Bitmap photo;
 			//Adds all the bitmaps.
-			for (Bitmap bm: imageList) {
-				encoder.addFrame(bm);
+			for (String str: imageList) {
+				photo = createBitmap(str);
+				
+				encoder.addFrame(resizeImage(photo));
 			}
 
 			encoder.finish();
@@ -150,6 +155,36 @@ public class MovieSettings extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Creates a bitmap from a jpg in the stored file path.
+	 * @param filePath
+	 * @return
+	 */
+	private Bitmap createBitmap(String filePath)
+	{
+		File imageFile = new File(filePath);
+		Bitmap bm = null;
+		try {
+			bm = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(Uri.fromFile(imageFile)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return bm;
+	}
+	
+	/**
+	 * Resizes a bitmap
+	 * @param original bitmap
+	 * @return resized bitmap
+	 */
+	private Bitmap resizeImage(Bitmap original) {
+		int width = original.getWidth()/4;
+		int height = original.getHeight()/4;
+
+		return Bitmap.createScaledBitmap(original, width, height, true);
 	}
 
 	/**
