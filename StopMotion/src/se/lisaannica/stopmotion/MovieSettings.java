@@ -11,12 +11,17 @@ import java.util.List;
 import java.util.TreeSet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,17 +35,18 @@ import android.widget.Toast;
  */
 public class MovieSettings extends Activity {
 
-	private List<Bitmap> imageList;
+	private List<String> imageList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_movie_settings);
 
+		Log.d("show", "Started settings");
+		
 		Intent intent = getIntent();
-		Serializable images = intent.getSerializableExtra("images");
-
-		imageList = setImageList(images);
+		imageList = intent.getStringArrayListExtra("imageList");
+		//imageList = setImageList(images);
 	}
 
 	/**
@@ -49,20 +55,21 @@ public class MovieSettings extends Activity {
 	 * @param images
 	 * @return
 	 */
-	private List<Bitmap> setImageList(Serializable images)
+	/*private List<Bitmap> setImageList(Serializable images)
 	{
+		Log.d("show", "Set image list");
 		List<Bitmap> list = new ArrayList<Bitmap>();
 		Object[] o = (Object[]) images;
 		if (o != null) {
 			for (int i = 0; i < o.length; i++) {
 				if (o[i] instanceof Bitmap) {
-					System.out.println("Is bitmap");
+					Log.d("show", "Adding bitmap");
 					list.add((Bitmap) o[i]);
 				}
 			}
 		}
 		return list;
-	}
+	}*/
 
 	/**
 	 * Method called by pressing the save-button.
@@ -134,9 +141,12 @@ public class MovieSettings extends Activity {
 
 			encoder.start(os);
 
+			Bitmap photo;
 			//Adds all the bitmaps.
-			for (Bitmap bm: imageList) {
-				encoder.addFrame(bm);
+			for (String str: imageList) {
+				photo = createBitmap(str);
+				
+				encoder.addFrame(resizeImage(photo));
 			}
 
 			encoder.finish();
@@ -150,6 +160,36 @@ public class MovieSettings extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Creates a bitmap from a jpg in the stored file path.
+	 * @param filePath
+	 * @return
+	 */
+	private Bitmap createBitmap(String filePath)
+	{
+		File imageFile = new File(filePath);
+		Bitmap bm = null;
+		try {
+			bm = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(Uri.fromFile(imageFile)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return bm;
+	}
+	
+	/**
+	 * Resizes a bitmap
+	 * @param original bitmap
+	 * @return resized bitmap
+	 */
+	private Bitmap resizeImage(Bitmap original) {
+		int width = original.getWidth()/4;
+		int height = original.getHeight()/4;
+
+		return Bitmap.createScaledBitmap(original, width, height, true);
 	}
 
 	/**
@@ -166,5 +206,40 @@ public class MovieSettings extends Activity {
 				file.delete();
 			}
 		}
+	}
+
+	/**
+	 * Go back to the main activity without saving the movie
+	 * @param button
+	 */
+	public void discardPic(View button) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(MovieSettings.this);
+
+		//strings for the dialog
+		String dialogText = getResources().getString(R.string.settings_discard_msg);
+		String positiveText = getResources().getString(R.string.settings_yes);
+		String negativeText = getResources().getString(R.string.settings_no);
+
+		//set strings for message and buttons in dialog
+		builder.setMessage(dialogText);
+		builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				Log.d("settings", "positive button");
+				//remove images from folder
+				cleanImagesFolder();
+
+				//go back to main activity without possibilities to go back
+				Intent intent = Intent.makeRestartActivityTask(
+						new ComponentName("se.lisaannica.stopmotion","se.lisaannica.stopmotion.MainActivity"));
+				startActivity(intent);
+			}
+		});
+
+		//do nothing but close the dialog
+		builder.setNegativeButton(negativeText, null);
+
+		//show the dialog
+		builder.create().show();
 	}
 }

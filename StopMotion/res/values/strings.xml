@@ -29,6 +29,7 @@
     <string name="main_remove_verification">Sure you want to remove this movie?</string>
     <string name="main_edit">Edit movie</string>
     <string name="main_play">Play movie</string>
+    <string name="main_share">Share movie</string>
     
     <!-- strings specific for creating a new movie -->
     <string name="create_instruction">You have to add a picture</string>
@@ -38,6 +39,11 @@
     <!-- strings specific for the settings -->
     <string name="settings_hint">Title</string>
     <string name="settings_save">Save</string>
+    <string name="settings_discard">Discard</string>
+    <string name="settings_discard_msg">Are you sure you want to discard the movie without saving?</string>
+    <string name="settings_yes">Yes</string>
+    <string name="settings_no">No</string>
+    
     <string name="setting_save_verification">Your stop motion movie is saved!</string>
     
     <!-- strings specific for twitter connection activity -->
