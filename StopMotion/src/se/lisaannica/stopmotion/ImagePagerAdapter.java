@@ -82,4 +82,11 @@ public class ImagePagerAdapter extends PagerAdapter {
 	public boolean isViewFromObject(View view, Object obj) {
 		return view == ((ImageView) obj);
 	}
+	
+	@Override
+	public CharSequence getPageTitle(int position) {
+		CharSequence title = "Image " + (position+1) + "/" + images.size();
+		Log.d("show", "ImagePagerADapter, getPageTitle: " + title);
+		return title;
+	}
 }

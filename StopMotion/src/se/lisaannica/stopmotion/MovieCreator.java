@@ -15,16 +15,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Create a new stop motion movie.
- * @author Lisa Ring and Annica Lindstrom
+ * @author Lisa Ring and Annica Lindström
  *
  */
 public class MovieCreator extends Activity {
@@ -37,6 +37,7 @@ public class MovieCreator extends Activity {
 	private TextView instruction;
 	private ImagePagerAdapter pagerAdapter;
 	private ViewPager viewPager;
+	private PagerTitleStrip titleStrip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,15 @@ public class MovieCreator extends Activity {
 
 		//instructions to be visible when no images added
 		instruction = (TextView) findViewById(R.id.textView_create_instruction);
-
+		
+		//set adapter to handle paging and images
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		pagerAdapter = new ImagePagerAdapter();
 		viewPager.setAdapter(pagerAdapter);
-
+		
+		//the title strip
+		titleStrip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
+		
 		imageStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionImages");
 		imageList = new ArrayList<String>();
 	}
@@ -166,15 +171,18 @@ public class MovieCreator extends Activity {
 				instruction.setText("");
 
 				//set the image on the screen
-				pagerAdapter.addImage(resizeImage(photo));
-				pagerAdapter.notifyDataSetChanged();
-			} 
-		} else if (resultCode == RESULT_CANCELED) {
-		} else {
-			Toast.makeText(
-					this, 
-					"Something went wrong with the camera, please try again.",  
-					Toast.LENGTH_LONG).show();
+	            pagerAdapter.addImage(resizeImage(photo));
+	            pagerAdapter.notifyDataSetChanged();
+	            
+	            //set the text of the pager title strip
+	            titleStrip.setTextSpacing(titleStrip.getTextSpacing());
+			} else if (resultCode == RESULT_CANCELED) {
+			} else {
+				Toast.makeText(
+						this, 
+						"Something went wrong with the camera, please try again.",  
+						Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 

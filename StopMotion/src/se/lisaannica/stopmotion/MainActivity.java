@@ -82,9 +82,6 @@ public class MainActivity extends ListActivity {
 		if(item.getItemId() == R.id.menu_create_new) {
 			Intent intent = new Intent(MainActivity.this, MovieCreator.class);
 			this.startActivity(intent);
-		} else if(item.getItemId() == R.id.menu_share) {
-			//Intent intent = new Intent(MainActivity.this, TwitterConnection.class);
-			//this.startActivity(intent);
 		}
 
 		return super.onOptionsItemSelected(item);
