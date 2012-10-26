@@ -1,20 +1,11 @@
 package se.lisaannica.stopmotion;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.SurfaceView;
-import android.view.View;
 import android.widget.Toast;
 
 

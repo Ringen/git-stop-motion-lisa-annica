@@ -5,6 +5,10 @@
     
     <string name="title_activity_main">Stop motion</string>
     
+    <!-- file strings -->
+    <string name="image_storage_file">StopMotionImages</string>
+    <string name="movie_storage_file">StopMotionMovies</string>
+    
     <!-- twitter access -->
     <string name="twitter_consumer_key">rWOOhjoKG2BDKrFshY6Q</string>
     <string name="twitter_consumer_secret">xKFBxr77tTW4HwhwgbVeUAkayA3PoSuIr6URVpaM8o</string>
@@ -43,13 +47,16 @@
     <string name="settings_discard_msg">Are you sure you want to discard the movie without saving?</string>
     <string name="settings_yes">Yes</string>
     <string name="settings_no">No</string>
-    
+    <string name="settings_saving">Saving, please wait</string>
     <string name="setting_save_verification">Your stop motion movie is saved!</string>
+    <string name="settings_file_name_notification">The name can only contain letters a-z.</string>
     
     <!-- strings specific for twitter connection activity -->
     <string name="twitter_login_instruction">You have to login to twitter</string>
     <string name="twitter_hint_username">Username or e-mail</string>
     <string name="twitter_hint_password">Password</string>
     <string name="twitter_button_login">Login</string>
+    
+    
 
 </resources>

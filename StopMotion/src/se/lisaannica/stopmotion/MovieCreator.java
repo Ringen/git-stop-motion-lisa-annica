@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;

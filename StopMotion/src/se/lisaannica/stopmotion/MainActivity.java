@@ -7,13 +7,8 @@ import java.util.List;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -23,7 +18,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 /**
  * List of stop motion movies.
