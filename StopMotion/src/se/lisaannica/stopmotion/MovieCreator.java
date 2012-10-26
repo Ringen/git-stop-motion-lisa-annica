@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,12 +31,11 @@ public class MovieCreator extends Activity {
 	private Uri imageFile;												//Image to save the captured image in.
 	private File imageStorageDir;										//Direction to where the stored images are.
 	private ArrayList<String> imageList;
-	
 	private TextView instruction;
 	private ImagePagerAdapter pagerAdapter;
 	private ViewPager viewPager;
 	private PagerTitleStrip titleStrip;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,7 +55,7 @@ public class MovieCreator extends Activity {
 		imageStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionImages");
 		imageList = new ArrayList<String>();
 	}
-
+	
 	/**
 	 * Method called by pressing the add-button
 	 * @param addButton
@@ -176,6 +173,9 @@ public class MovieCreator extends Activity {
 	            
 	            //set the text of the pager title strip
 	            titleStrip.setTextSpacing(titleStrip.getTextSpacing());
+	            
+	            //set the current page to the new page
+	            viewPager.setCurrentItem(pagerAdapter.getCount()-1);
 			} else if (resultCode == RESULT_CANCELED) {
 			} else {
 				Toast.makeText(

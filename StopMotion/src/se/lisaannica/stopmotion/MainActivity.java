@@ -90,8 +90,8 @@ public class MainActivity extends ListActivity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			menu.setHeaderTitle(movies.get(info.position).toString());
 			menu.add(0, 0, 0, getResources().getString(R.string.main_play));
-			menu.add(0, 1, 0, getResources().getString(R.string.main_remove));
-			menu.add(0, 2, 0, getResources().getString(R.string.main_share));
+			menu.add(0, 1, 0, getResources().getString(R.string.main_share));
+			menu.add(0, 2, 0, getResources().getString(R.string.main_remove));
 		}
 	}
 
@@ -106,9 +106,9 @@ public class MainActivity extends ListActivity {
 			Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
 			intent.putExtra("gifName", movieName);
 			this.startActivity(intent);
-		} else if (item.getItemId() == 1) { //Remove movie
+		} else if (item.getItemId() == 2) { //Remove movie
 			deleteMovie(movieName);
-		} else if (item.getItemId() == 2) {
+		} else if (item.getItemId() == 1) {
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
 			Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
 			

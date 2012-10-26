@@ -40,8 +40,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 	 * Returns the array with images.
 	 * @return
 	 */
-	public List<Bitmap> getImages()
-	{
+	public List<Bitmap> getImages() {
 		return images;
 	}
 
