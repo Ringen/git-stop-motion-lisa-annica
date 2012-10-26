@@ -13,6 +13,7 @@ public final class R {
     public static final class drawable {
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
+        public static final int ic_menu_add=0x7f020002;
     }
     public static final class id {
         public static final int button_add=0x7f070004;
@@ -27,7 +28,6 @@ public final class R {
         public static final int imageView=0x7f07000f;
         public static final int linearLayout_create=0x7f070002;
         public static final int menu_create_new=0x7f070011;
-        public static final int menu_share=0x7f070012;
         public static final int pager_title_strip=0x7f070003;
         public static final int relativeLayout_create=0x7f070000;
         public static final int textView_create_instruction=0x7f070006;

@@ -9,8 +9,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout_create"
-        android:background="#f89bf8" >
+        android:layout_above="@+id/linearLayout_create" >
 
         <android.support.v4.view.PagerTitleStrip
             android:id="@+id/pager_title_strip"
