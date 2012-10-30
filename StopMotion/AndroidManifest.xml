@@ -35,10 +35,15 @@
         </activity>
         <activity
             android:name=".MoviePlayer"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
             android:name=".TwitterConnection"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".GetPINActivity"
             android:label="@string/title_activity_main" >
         </activity>
     </application>

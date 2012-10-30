@@ -3,8 +3,15 @@ package se.lisaannica.stopmotion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import twitter4j.Status;
+import twitter4j.TwitterException;
 import android.app.ListActivity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,6 +34,8 @@ public class MainActivity extends ListActivity {
 	private List<String> movies;
 	private File movieStorageDir;
 	private ArrayAdapter<String> adapter;
+	private TwitterConnection twitter;
+	private String movieName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +107,7 @@ public class MainActivity extends ListActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		String movieName = movies.get((info.position));
+		movieName = movies.get((info.position));
 		
 		if(item.getItemId() == 0) { //Play movie
 			Log.d("main", "MainActivity, onContextItemSelected, item: " + item.getItemId());
@@ -109,35 +118,71 @@ public class MainActivity extends ListActivity {
 		} else if (item.getItemId() == 2) { //Remove movie
 			deleteMovie(movieName);
 		} else if (item.getItemId() == 1) {
-			Intent shareIntent = new Intent(Intent.ACTION_SEND);
-			Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
-			
-			shareIntent.setType("image/gif");
-			shareIntent.putExtra(android.content.Intent.EXTRA_STREAM, screenshotUri);
-			
-			//For sending text
-			//shareIntent.setType("text/plain");
-			//shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Testing");		 
-			
-			//For starting Twitter
-		    /*final PackageManager pm = this.getPackageManager();
-		    final List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
-		    for (final ResolveInfo app : activityList) {
-		      if ("com.twitter.android.PostActivity".equals(app.activityInfo.name)) {
-		        final ActivityInfo activity = app.activityInfo;
-		        final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
-		        shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-		        shareIntent.setComponent(name);
-		        startActivity(shareIntent);
-		        break;
-		      }
-		    }*/
+//			Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//			Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
+//			
+//			shareIntent.setType("image/gif");
+//			shareIntent.putExtra(android.content.Intent.EXTRA_STREAM, screenshotUri);
+//			
+//			//For sending text
+//			//shareIntent.setType("text/plain");
+//			//shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Testing");		 
+//			
+//			//For starting Twitter
+//		    final PackageManager pm = this.getPackageManager();
+//		    final List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+//		    for (final ResolveInfo app : activityList) {
+//		      if ("com.twitter.android.PostActivity".equals(app.activityInfo.name)) {
+//		        final ActivityInfo activity = app.activityInfo;
+//		        final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+//		        shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//		        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//		        shareIntent.setComponent(name);
+//		        startActivity(shareIntent);
+//		        break;
+//		      }
+//		    }
 			
 			//Comment this part if you just want to open Twitter.
-			startActivity(Intent.createChooser(shareIntent, "Share image using"));
+//			startActivity(Intent.createChooser(shareIntent, "Share image using"));
+			
+			//TODO do this in asyncTask?
+			//TODO check sharedPrefs if username och password exists
+			//Lisas twitter
+			try {
+				twitter = new TwitterConnection(getResources());
+				String authorizationUrl = twitter.setup();
+				
+				Intent authIntent = new Intent(MainActivity.this, GetPINActivity.class);
+				authIntent.putExtra("url", authorizationUrl);
+				startActivityForResult(authIntent, 0);
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} 
 		return super.onContextItemSelected(item);
+	}
+	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK) {
+			if(requestCode == 0) {
+				try {
+					String pin = data.getStringExtra("pin");
+					twitter.authenticate(pin);
+					Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
+					String twitpicUrl = twitter.uploadImage(new File(screenshotUri.toString()));
+					Status sentStatus = twitter.sendTweet("TestTweet " + twitpicUrl);
+				} catch (TwitterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	/**
