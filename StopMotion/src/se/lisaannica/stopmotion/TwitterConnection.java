@@ -52,8 +52,7 @@ public class TwitterConnection {
 	private String oauth_consumer_secret;
 	private Twitter mTwitter;
 	private RequestToken mRequestToken;
-	private AccessToken mAccessToken;
-
+	
 	public TwitterConnection(Resources res) {
 		twitpic_api_key = res.getString(R.string.twitpic_api_key);
 		oauth_consumer_key = res.getString(R.string.twitter_consumer_key);
@@ -96,11 +95,10 @@ public class TwitterConnection {
 	}
 
 	public AccessToken authenticate(String pin) throws TwitterException {
-		mAccessToken = mTwitter.getOAuthAccessToken(mRequestToken, pin);
-		return mAccessToken;
+		return mTwitter.getOAuthAccessToken(mRequestToken, pin);
 	}
 
-	public String uploadImage(File file) throws TwitterException {
+	public String uploadImage(File file, String token, String tokenSecret) throws TwitterException {
 		// TODO Auto-generated method stub
 		// A builder for the configuration with all authentications needed, both twitter and twitpic have
 		// keys that must be provided here 
@@ -109,8 +107,8 @@ public class TwitterConnection {
 		.setMediaProviderAPIKey(twitpic_api_key) // This is the TwitPic Key
 		.setOAuthConsumerKey(oauth_consumer_key) // Twitter Consumer
 		.setOAuthConsumerSecret(oauth_consumer_secret) // Twitter Consumer
-		.setOAuthAccessToken(mAccessToken.getToken()) // Twitter User Token
-		.setOAuthAccessTokenSecret(mAccessToken.getTokenSecret()); // Twitter User Token
+		.setOAuthAccessToken(token) // Twitter User Token
+		.setOAuthAccessTokenSecret(tokenSecret); // Twitter User Token
 		Configuration configuration = cb.build(); // Build the Configuration that must be 
 		// used when creating the Twitter Object 
 		// as well as uploading the image.
@@ -130,5 +128,12 @@ public class TwitterConnection {
 	      // Post the message on twitter. Returns a Status object.
 	      Status status = mTwitter.updateStatus(tweetMsg);
 	      return status;
+	}
+	
+	public Status sendSecondTweet(String tweetMsg, String token, String tokenSecret) throws TwitterException {
+		mTwitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+		
+		Status status = mTwitter.updateStatus(tweetMsg);
+	    return status;
 	}
 }
