@@ -6,6 +6,7 @@ import java.util.List;
 
 import twitter4j.Status;
 import twitter4j.TwitterException;
+import twitter4j.auth.AccessToken;
 import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -149,18 +151,9 @@ public class MainActivity extends ListActivity {
 			//TODO do this in asyncTask?
 			//TODO check sharedPrefs if username och password exists
 			//Lisas twitter
-			try {
-				twitter = new TwitterConnection(getResources());
-				String authorizationUrl = twitter.setup();
-				
-				Intent authIntent = new Intent(MainActivity.this, GetPINActivity.class);
-				authIntent.putExtra("url", authorizationUrl);
-				startActivityForResult(authIntent, 0);
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
+			AsyncTask at = new TwitterSetup().execute();
+						
 		} 
 		return super.onContextItemSelected(item);
 	}
@@ -171,16 +164,8 @@ public class MainActivity extends ListActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == RESULT_OK) {
 			if(requestCode == 0) {
-				try {
-					String pin = data.getStringExtra("pin");
-					twitter.authenticate(pin);
-					Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
-					String twitpicUrl = twitter.uploadImage(new File(screenshotUri.toString()));
-					Status sentStatus = twitter.sendTweet("TestTweet " + twitpicUrl);
-				} catch (TwitterException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				AsyncTask at = new TwitterAuthentication().execute(data);
 			}
 		}
 	}
@@ -201,5 +186,44 @@ public class MainActivity extends ListActivity {
 			}	
 		}
 		adapter.remove(movieName);
+	} 
+	
+	private class TwitterAuthentication extends AsyncTask<Intent, Integer, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Intent... datas) {
+			Intent data = datas[0];
+			
+			try {
+				String pin = data.getStringExtra("pin");
+				AccessToken accessToken = twitter.authenticate(pin);
+				Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif");
+				String twitpicUrl = twitter.uploadImage(new File(screenshotUri.toString()));
+				twitter4j.Status sentStatus = twitter.sendTweet("TestTweet " + twitpicUrl);
+			} catch (TwitterException e) {
+				Log.d("show", "MainActivity, TwitterAuthentication, doInBackground: Could not complete Twitter authentication.");
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	private class TwitterSetup extends AsyncTask<String, Integer, Boolean> {
+		@Override
+		protected Boolean doInBackground(String... params) {
+			try {
+				twitter = new TwitterConnection(getResources());
+				String authorizationUrl = twitter.setup();
+				
+				Intent authIntent = new Intent(MainActivity.this, GetPINActivity.class);
+				authIntent.putExtra("url", authorizationUrl);
+				startActivityForResult(authIntent, 0);
+			} catch (TwitterException e) {
+				Log.d("show", "MainActivity, TwitterSetup, doInBackground: Could not set up Twitter connection.");
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
 	}
 }

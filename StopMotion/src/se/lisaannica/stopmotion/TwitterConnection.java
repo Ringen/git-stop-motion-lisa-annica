@@ -95,8 +95,9 @@ public class TwitterConnection {
 	    return mRequestToken.getAuthorizationURL();
 	}
 
-	public void authenticate(String pin) throws TwitterException {
+	public AccessToken authenticate(String pin) throws TwitterException {
 		mAccessToken = mTwitter.getOAuthAccessToken(mRequestToken, pin);
+		return mAccessToken;
 	}
 
 	public String uploadImage(File file) throws TwitterException {
