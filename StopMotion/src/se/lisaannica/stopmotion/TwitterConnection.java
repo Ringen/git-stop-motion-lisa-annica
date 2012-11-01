@@ -8,21 +8,12 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.media.ImageUpload;
 import twitter4j.media.ImageUploadFactory;
 import twitter4j.media.MediaProvider;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.sax.StartElementListener;
-import android.util.Log;
-import se.lisaannica.stopmotion.R;
 
 /**
  * This test file posts a picture on TwitPic and a tweet on twitter linking to that picture
@@ -52,7 +43,7 @@ public class TwitterConnection {
 	private String oauth_consumer_secret;
 	private Twitter mTwitter;
 	private RequestToken mRequestToken;
-	
+
 	public TwitterConnection(Resources res) {
 		twitpic_api_key = res.getString(R.string.twitpic_api_key);
 		oauth_consumer_key = res.getString(R.string.twitter_consumer_key);
@@ -78,20 +69,21 @@ public class TwitterConnection {
 	}
 
 	public String setup() throws TwitterException {
-		// TODO Auto-generated method stub
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-	    cb.setDebugEnabled(true)
-	        .setOAuthConsumerKey(oauth_consumer_key) // Twitter Consumer
-	        .setOAuthConsumerSecret(oauth_consumer_secret); // Twitter Consumer
-	    Configuration configuration = cb.build(); // Build the Configuration that must be 
-	    // used when creating the Twitter Object 
-	    // as well as uploading the image.
+		cb.setDebugEnabled(true)
+		.setOAuthConsumerKey(oauth_consumer_key)
+		.setOAuthConsumerSecret(oauth_consumer_secret);
 
-	    // Create the Twitter object used to send stuff to.
-	    mTwitter = new TwitterFactory(configuration).getInstance();
-	    mRequestToken = mTwitter.getOAuthRequestToken();
+		/* Build the Configuration that must be used when creating the 
+		 * Twitter Object as well as uploading the image.*/
+		Configuration configuration = cb.build(); 
 
-	    return mRequestToken.getAuthorizationURL();
+
+		// Create the Twitter object used to send stuff to.
+		mTwitter = new TwitterFactory(configuration).getInstance();
+		mRequestToken = mTwitter.getOAuthRequestToken();
+
+		return mRequestToken.getAuthorizationURL();
 	}
 
 	public AccessToken authenticate(String pin) throws TwitterException {
@@ -99,7 +91,6 @@ public class TwitterConnection {
 	}
 
 	public String uploadImage(File file, String token, String tokenSecret) throws TwitterException {
-		// TODO Auto-generated method stub
 		// A builder for the configuration with all authentications needed, both twitter and twitpic have
 		// keys that must be provided here 
 		ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -114,26 +105,20 @@ public class TwitterConnection {
 		// as well as uploading the image.
 
 		// Create the Twitter object used to send stuff to.
-//		TwitterFactory tf = new TwitterFactory(configuration);
-//		Twitter userTwitter = tf.getInstance();
-		// Use our own method for uploading pic to TwitPic
 		return uploadTwitPic(configuration, file);
 	}
 
 	public Status sendTweet(String tweetMsg) throws TwitterException {
-		// TODO Auto-generated method stub
-		// Create the message string, should include the url to the TwitPic 
-	      // image so it will be pasted as a link
-
-	      // Post the message on twitter. Returns a Status object.
-	      Status status = mTwitter.updateStatus(tweetMsg);
-	      return status;
+		/* Post the message on twitter. Returns a Status object. 
+		 * The message contains the URL to the image on twitpic */
+		Status status = mTwitter.updateStatus(tweetMsg);
+		return status;
 	}
-	
+
 	public Status sendSecondTweet(String tweetMsg, String token, String tokenSecret) throws TwitterException {
 		mTwitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
-		
+
 		Status status = mTwitter.updateStatus(tweetMsg);
-	    return status;
+		return status;
 	}
 }

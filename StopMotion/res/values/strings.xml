@@ -51,14 +51,13 @@
     <string name="setting_save_verification">Your stop motion movie is saved!</string>
     <string name="settings_file_name_notification">The name can only contain letters a-z.</string>
     
-    <!-- strings specific for twitter connection activity -->
-    <string name="twitter_login_instruction">You have to login to twitter</string>
-    <string name="twitter_hint_username">Username or e-mail</string>
-    <string name="twitter_hint_password">Password</string>
-    <string name="twitter_button_login">Login</string>
-    
     <!-- strings specific for sending tweets -->
     <string name="send_tweet">Send tweet</string>
+    <string name="send_hint_msg">Your message</string>
+    <string name="send_hint_pin">Enter pin</string>
+    <string name="send_continue">Continue</string>
+    <string name="send_cancel">Cancel</string>
+    <string name="send_instruction">Remember the PIN-code. Press back to return to application when authenticated.</string>
     
     
 

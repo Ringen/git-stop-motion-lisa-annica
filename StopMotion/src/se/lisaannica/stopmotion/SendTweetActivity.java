@@ -3,7 +3,6 @@ package se.lisaannica.stopmotion;
 import java.io.File;
 
 import twitter4j.TwitterException;
-import twitter4j.auth.AccessToken;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -33,7 +32,7 @@ public class SendTweetActivity extends Activity{
 	public void sendTweetOnClick (View v) {
 		System.out.println("In onclick");
 		if (v.getId() == R.id.button_send_tweet) {
-			AsyncTask at = new TweetSender().execute();
+			new TweetSender().execute();
 		}
 	}
 
@@ -41,18 +40,16 @@ public class SendTweetActivity extends Activity{
 
 		@Override
 		protected Boolean doInBackground(Intent... arg0) {
-
 			EditText et = (EditText) findViewById(R.id.editText_tweet_text);
 
 			try {
 				twitter = new TwitterConnection(getResources());
-				String authorizationUrl = twitter.setup();
-				
+				twitter.setup();
 				
 				Uri screenshotUri = Uri.parse(gifPath); 
 				String twitpicUrl = twitter.uploadImage(
 						new File(screenshotUri.toString()), token, tokenSecret);
-				twitter4j.Status sentStatus = twitter.sendSecondTweet(et.getText() + " #stopmotion " + twitpicUrl, token, tokenSecret);
+				twitter.sendSecondTweet(et.getText() + " #stopmotion " + twitpicUrl, token, tokenSecret);
 			
 				//TODO
 				//Close and start main again and toast

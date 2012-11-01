@@ -64,7 +64,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 		imageView.setImageBitmap(images.get(position));
 		
 		viewPager.addView(imageView);
-		
 		return imageView;
 	}
 	

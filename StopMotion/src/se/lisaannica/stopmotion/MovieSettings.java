@@ -56,7 +56,7 @@ public class MovieSettings extends Activity {
 		gifName = et.getText().toString();
 
 		if (onlyLetters(gifName)) {
-			AsyncTask<String, Integer, Boolean> at = new Loader().execute(gifName);
+			new Loader().execute(gifName);
 		} else {
 			Toast.makeText(this, getResources().getString(R.string.settings_file_name_notification), Toast.LENGTH_LONG).show();
 		}
@@ -166,7 +166,6 @@ public class MovieSettings extends Activity {
 					getResources().getString(R.string.movie_storage_file));
 
 			if (!movieStorageDir.exists()) {
-				//TODO find out what this does.
 				if (!movieStorageDir.mkdirs()) {
 				}
 			}
@@ -195,7 +194,6 @@ public class MovieSettings extends Activity {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
