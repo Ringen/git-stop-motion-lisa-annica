@@ -137,7 +137,7 @@ public class MovieSettings extends Activity {
 		@Override
 		protected void onPreExecute() {
 			//Shows the dialog
-			pd = ProgressDialog.show(MovieSettings.this, "", getResources().getString(R.string.settings_discard_msg));
+			pd = ProgressDialog.show(MovieSettings.this, "", getResources().getString(R.string.settings_saving));
 		}
 		
 		@Override

@@ -59,6 +59,8 @@
     
     <!-- strings specific for sending tweets -->
     <string name="send_tweet">Send tweet</string>
+    <string name="send_tweet_sending">Sending</string>
+    <string name="send_tweet_sent">Your message has now been posted on Twitter</string>
     
     
 
