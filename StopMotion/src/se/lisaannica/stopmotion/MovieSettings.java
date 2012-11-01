@@ -185,6 +185,7 @@ public class MovieSettings extends Activity {
 					photo = createBitmap(str);
 
 					encoder.addFrame(resizeImage(photo));
+					encoder.setDelay(500);
 				}
 
 				encoder.finish();

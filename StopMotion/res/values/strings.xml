@@ -33,7 +33,7 @@
     <string name="main_remove_verification">Sure you want to remove this movie?</string>
     <string name="main_edit">Edit movie</string>
     <string name="main_play">Play movie</string>
-    <string name="main_share">Share movie</string>
+    <string name="main_share">Share on Twitter</string>
     
     <!-- strings specific for creating a new movie -->
     <string name="create_instruction">You have to add a picture</string>
@@ -56,6 +56,9 @@
     <string name="twitter_hint_username">Username or e-mail</string>
     <string name="twitter_hint_password">Password</string>
     <string name="twitter_button_login">Login</string>
+    
+    <!-- strings specific for sending tweets -->
+    <string name="send_tweet">Send tweet</string>
     
     
 
