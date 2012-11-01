@@ -1,5 +1,16 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    <!-- <color name="custom_theme_color">#ccffcc</color>
+
+    <style name="ThemePink" parent="android:Theme.Light">
+        <item name="android:windowBackground">@color/custom_theme_color</item>
+        <item name="android:windowActionBar">True</item>
+        <item name="android:actionBarStyle">@style/BlackActionBar</item>
+    </style>
+    
+    <style name="BlackActionBar" parent="android:Theme.Black"> 
+    
+    </style>-->
 </resources>
