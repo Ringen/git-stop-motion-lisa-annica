@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -91,7 +92,6 @@ public class MovieCreator extends Activity {
 		if (!imageStorageDir.exists()) {
 			System.out.println("Directory does not exist.");
 
-			//TODO find out what this does.
 			if (!imageStorageDir.mkdirs()) {
 				System.out.println("Failed to create directory for images.");
 			}
@@ -175,8 +175,8 @@ public class MovieCreator extends Activity {
 	            titleStrip.setTextSpacing(titleStrip.getTextSpacing());
 	            
 	            //set the current page to the new page
-	            viewPager.setCurrentItem(pagerAdapter.getCount()-1);
-			} else if (resultCode == RESULT_CANCELED) {
+	            int pos = pagerAdapter.getCount()-1;
+	            viewPager.setCurrentItem(pos);
 			} else {
 				Toast.makeText(
 						this, 
@@ -185,7 +185,6 @@ public class MovieCreator extends Activity {
 			}
 		}
 	}
-
 
 	/**
 	 * Resizes a bitmap

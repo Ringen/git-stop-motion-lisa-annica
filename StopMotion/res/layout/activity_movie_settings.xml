@@ -29,20 +29,20 @@
         android:paddingTop="5.0dip" >
 
         <Button
-            android:id="@+id/button_discard"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:onClick="discardPic"
-            android:text="@string/settings_discard" />
-
-        <Button
             android:id="@+id/button_save"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:onClick="savePic"
             android:text="@string/settings_save" />
+
+        <Button
+            android:id="@+id/button_discard"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:onClick="discardPic"
+            android:text="@string/settings_discard" />
     </LinearLayout>
 
     </RelativeLayout>

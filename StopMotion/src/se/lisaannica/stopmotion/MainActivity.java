@@ -4,16 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import android.app.ListActivity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,8 +48,6 @@ public class MainActivity extends ListActivity {
 		movies = setMovieList(movieStorageDir);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		//TODO should we create our own adapter?
-		//If we have time we can prettyfy it.
 		adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, movies);
 		setListAdapter(adapter);
 
@@ -107,7 +100,6 @@ public class MainActivity extends ListActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view,
 			ContextMenuInfo menuInfo) {
-		// TODO maybe we should remove the option to remove and edit?
 		super.onCreateContextMenu(menu, view, menuInfo);
 
 		if (view.getId() == getListView().getId()) {
@@ -131,7 +123,7 @@ public class MainActivity extends ListActivity {
 			intent.putExtra("gifName", movieName);
 			this.startActivity(intent);
 		} else if (item.getItemId() == 1) { //Share on Twitter
-			AsyncTask at = new TwitterSetup().execute();
+			new TwitterSetup().execute();
 		} else if (item.getItemId() == 2) { //Remove movie
 			deleteMovie(movieName);
 		} 
@@ -144,7 +136,7 @@ public class MainActivity extends ListActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == RESULT_OK) {
 			if(requestCode == 0) {
-				AsyncTask at = new TwitterAuthentication().execute(data);
+				new TwitterAuthentication().execute(data);
 			}
 		}
 	}
@@ -221,7 +213,7 @@ public class MainActivity extends ListActivity {
 				Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif"); 
 				String twitpicUrl = twitter.uploadImage(
 						new File(screenshotUri.toString()), accessToken.getToken(), accessToken.getTokenSecret());
-				twitter4j.Status sentStatus = twitter.sendTweet("TestTweet " + twitpicUrl);
+				twitter.sendTweet("TestTweet " + twitpicUrl);
 			} catch (TwitterException e) {
 				Log.d("show", "MainActivity, TwitterAuthentication, doInBackground: Could not complete Twitter authentication.");
 				e.printStackTrace();

@@ -1,7 +1,6 @@
 // Created by JeffMeJones@gmail.com
 package se.lisaannica.stopmotion;
 
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,15 +8,11 @@ import java.io.FileNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
-
 public class GifRun implements Runnable, Callback {
-
-
 	public Bitmap bmb;
 	public GIFDecode decode;
 	public int ind;
@@ -50,11 +45,8 @@ public class GifRun implements Runnable, Callback {
 		Canvas rCanvas;
 		while (surfaceExists) {
 			try {
-
 				rCanvas = mSurfaceHolder.lockCanvas();
 				rCanvas.drawBitmap(bmb, 0, 0, new Paint());
-				//ImageView im = (ImageView) findViewById(R.id.imageView1);
-				//im.setImageBitmap(bmb);
 
 				mSurfaceHolder.unlockCanvasAndPost(rCanvas);
 				bmb = decode.next();
@@ -64,7 +56,6 @@ public class GifRun implements Runnable, Callback {
 				ex.printStackTrace();
 			}
 		}
-
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -72,11 +63,10 @@ public class GifRun implements Runnable, Callback {
 	}
 
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
+		//not used
 	}
 
 	public void surfaceCreated(SurfaceHolder arg0) {
-		// TODO Auto-generated method stub
+		//not used
 	}
-
 }

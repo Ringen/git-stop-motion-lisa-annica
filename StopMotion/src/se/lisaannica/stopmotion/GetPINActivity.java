@@ -1,10 +1,6 @@
 package se.lisaannica.stopmotion;
 
-import java.io.File;
-
 import android.app.Activity;
-import android.app.Instrumentation.ActivityResult;
-import android.app.backup.RestoreObserver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class GetPINActivity extends Activity implements OnClickListener {
   
@@ -37,6 +34,7 @@ public class GetPINActivity extends Activity implements OnClickListener {
     mContinueButton.setOnClickListener(this);
     mCancelButton.setOnClickListener(this);
     
+    Toast.makeText(GetPINActivity.this, getResources().getString(R.string.send_instruction), Toast.LENGTH_LONG).show();
   }
 
   public void onClick(View v) {
