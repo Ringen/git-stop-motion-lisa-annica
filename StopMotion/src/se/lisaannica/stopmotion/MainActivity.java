@@ -91,9 +91,6 @@ public class MainActivity extends ListActivity {
 		if(item.getItemId() == R.id.menu_create_new) {
 			Intent intent = new Intent(MainActivity.this, MovieCreator.class);
 			this.startActivity(intent);
-		} else if (item.getItemId() == R.id.menu_settings) {
-			Intent intent = new Intent(MainActivity.this, Settings.class);
-			this.startActivity(intent);
 		}
 		
 

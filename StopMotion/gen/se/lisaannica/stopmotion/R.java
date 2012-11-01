@@ -32,7 +32,6 @@ public final class R {
         public static final int imageView=0x7f070010;
         public static final int linearLayout_create=0x7f070005;
         public static final int menu_create_new=0x7f070011;
-        public static final int menu_settings=0x7f070012;
         public static final int pager_title_strip=0x7f070006;
         public static final int relativeLayout_create=0x7f070003;
         public static final int textView_create_instruction=0x7f070009;
@@ -46,7 +45,6 @@ public final class R {
         public static final int activity_movie_settings=0x7f030004;
         public static final int activity_send_tweet=0x7f030005;
         public static final int fragment_content=0x7f030006;
-        public static final int image_fragment=0x7f030007;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;
@@ -76,14 +74,16 @@ public final class R {
         public static final int menu_create_new=0x7f04000d;
         public static final int menu_share=0x7f04000e;
         public static final int movie_storage_file=0x7f040004;
-        public static final int send_cancel=0x7f040026;
-        public static final int send_continue=0x7f040025;
-        public static final int send_hint_msg=0x7f040023;
-        public static final int send_hint_pin=0x7f040024;
-        public static final int send_instruction=0x7f040027;
+        public static final int send_cancel=0x7f040028;
+        public static final int send_continue=0x7f040027;
+        public static final int send_hint_msg=0x7f040025;
+        public static final int send_hint_pin=0x7f040026;
+        public static final int send_instruction=0x7f040029;
         /**  strings specific for sending tweets 
          */
         public static final int send_tweet=0x7f040022;
+        public static final int send_tweet_sending=0x7f040023;
+        public static final int send_tweet_sent=0x7f040024;
         public static final int setting_save_verification=0x7f040020;
         public static final int settings_discard=0x7f04001b;
         public static final int settings_discard_msg=0x7f04001c;
