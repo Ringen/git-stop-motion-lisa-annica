@@ -5,13 +5,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +42,6 @@ public class ImageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.d("show", "ImageFragment, onCreateView");
 		super.onCreateView(inflater, container, savedInstanceState);
 		
 		//find the imageView to hold the image
@@ -77,7 +74,6 @@ public class ImageFragment extends Fragment {
 
 		@Override
 		protected Bitmap doInBackground(Void... params) {
-			Log.d("show", "doinBackground");
 			URLConnection conn;
 			try {
 				//create a stream to the original image
@@ -92,10 +88,8 @@ public class ImageFragment extends Fragment {
 				
 				bm = Bitmap.createScaledBitmap(bitmap, width, height, true);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -104,7 +98,6 @@ public class ImageFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(Bitmap result) {
-			Log.d("show", "onPostExecute");
 			
 			super.onPostExecute(result);
 			/*Automatically set the resized image as the content of the 

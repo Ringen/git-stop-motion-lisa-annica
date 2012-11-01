@@ -53,10 +53,8 @@
     
     <!-- strings specific for sending tweets -->
     <string name="send_tweet">Send tweet</string>
-
     <string name="send_tweet_sending">Sending</string>
     <string name="send_tweet_sent">Your message has now been posted on Twitter</string>
-
     <string name="send_hint_msg">Your message</string>
     <string name="send_hint_pin">Enter pin</string>
     <string name="send_continue">Continue</string>

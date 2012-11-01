@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class AnimatedGifEncoder {
 
@@ -234,9 +233,6 @@ public class AnimatedGifEncoder {
 	    if (height < 1)
 	      height = 240;
 	    sizeSet = true;
-	    
-	    //TODO remove
-	    Log.d("movie", "AnimatedGifEncoder, setSize, width: " + w + ", height: " + h);
 	  }
 	  
 	  /**

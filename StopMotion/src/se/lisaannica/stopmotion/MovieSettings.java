@@ -18,7 +18,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -94,7 +93,6 @@ public class MovieSettings extends Activity {
 		builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				Log.d("settings", "positive button");
 				//remove images from folder
 				cleanImagesFolder();
 

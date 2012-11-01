@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,11 +32,14 @@ public class SendTweetActivity extends Activity{
 		gifPath = getIntent().getStringExtra("gifPath");
 	}
 
-	public void sendTweetOnClick (View v) {
+	public void tweetOnClick (View v) {
 		System.out.println("In onclick");
 
 		if (v.getId() == R.id.button_send_tweet) {
 			new TweetSender().execute();
+		} else if(v.getId() == R.id.button_dont_send) {
+			Intent intent = new Intent(SendTweetActivity.this, MainActivity.class);
+			startActivity(intent);
 		}
 	}
 
@@ -57,11 +59,7 @@ public class SendTweetActivity extends Activity{
 				String twitpicUrl = twitter.uploadImage(
 						new File(screenshotUri.toString()), token, tokenSecret);
 				twitter.sendSecondTweet(et.getText() + " #stopmotion " + twitpicUrl, token, tokenSecret);
-			
-				//TODO
-				//Close and start main again and toast
 			} catch (TwitterException e) {
-				Log.d("show", "SendTweetActivity, TweetSender, doInBackground: Could not send tweet");
 				e.printStackTrace();
 			}
 			return null;

@@ -4,7 +4,6 @@ package se.lisaannica.stopmotion;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;

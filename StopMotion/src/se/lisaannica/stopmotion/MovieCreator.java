@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +15,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,10 +115,8 @@ public class MovieCreator extends Activity {
 	public void finishMovie(View finishButton) {		
 		Intent intent = new Intent(MovieCreator.this, MovieSettings.class);
 		if (pagerAdapter.getImages().size() > 0) {
-			Log.d("show", "Starting intent");
 			//intent.putExtra("images", pagerAdapter.getImages().toArray());
 			intent.putStringArrayListExtra("imageList", imageList); 
-			Log.d("show", "After put extra");
 			this.startActivity(intent);
 
 		} else {
@@ -136,8 +132,6 @@ public class MovieCreator extends Activity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d("show", "MovieCreator, onActivityResult RESULT_OK: " 
-				+ RESULT_OK + ", resultCode: " + resultCode);
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -159,7 +153,6 @@ public class MovieCreator extends Activity {
 									Toast.LENGTH_LONG).show();
 						}
 					} catch (FileNotFoundException e) {
-						Log.d("show", "MovieCreator, onActivityResult, FileNotFoundException");
 						e.printStackTrace();
 					}
 				}

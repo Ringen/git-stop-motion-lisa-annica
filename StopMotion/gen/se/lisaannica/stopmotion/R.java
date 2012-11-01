@@ -22,6 +22,7 @@ public final class R {
         public static final int button_cancel=0x7f070002;
         public static final int button_continue=0x7f070001;
         public static final int button_discard=0x7f07000d;
+        public static final int button_dont_send=0x7f070010;
         public static final int button_finish=0x7f070008;
         public static final int button_save=0x7f07000c;
         public static final int button_send_tweet=0x7f07000f;
@@ -29,9 +30,9 @@ public final class R {
         public static final int editText_title=0x7f07000b;
         public static final int editText_tweet_text=0x7f07000e;
         public static final int gif_view=0x7f07000a;
-        public static final int imageView=0x7f070010;
+        public static final int imageView=0x7f070011;
         public static final int linearLayout_create=0x7f070005;
-        public static final int menu_create_new=0x7f070011;
+        public static final int menu_create_new=0x7f070012;
         public static final int pager_title_strip=0x7f070006;
         public static final int relativeLayout_create=0x7f070003;
         public static final int textView_create_instruction=0x7f070009;

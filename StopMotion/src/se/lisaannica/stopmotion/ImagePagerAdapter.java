@@ -2,11 +2,9 @@ package se.lisaannica.stopmotion;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +29,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 	 * @param image
 	 */
 	public void addImage(Bitmap image) {
-		Log.d("show", "ImagePagerAdapter, addImage " + image);
-		Log.d("show", "ImagePagerAdapter, addImage, height: " + image.getHeight() + ", width: " + image.getWidth());
 		images.add(image);
 	}
 	
@@ -53,8 +49,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 	public Object instantiateItem(ViewGroup viewPager, int position) {
 		/*called on an item in the viewpager that becomes the neighbor to
 		 * the current page (when swiping)*/
-		Log.d("show", "ImagePagerAdapter, instantiateItem " + position);
-		
 		if(inflater == null){
 			inflater = (LayoutInflater) viewPager.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,7 +63,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 	
 	@Override
 	public void destroyItem(ViewGroup viewPager, int position, Object object) {
-		Log.d("show", "ImagePagerAdapter, destroyItem " + position);
 		/*called on an item in the viewpager that no longer is a neighbor 
 		 * to the current page (when swiping)*/
 		viewPager.removeView((View) object);
@@ -83,7 +76,6 @@ public class ImagePagerAdapter extends PagerAdapter {
 	@Override
 	public CharSequence getPageTitle(int position) {
 		CharSequence title = "Image " + (position+1) + "/" + images.size();
-		Log.d("show", "ImagePagerADapter, getPageTitle: " + title);
 		return title;
 	}
 }

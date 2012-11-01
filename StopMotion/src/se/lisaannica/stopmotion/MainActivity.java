@@ -3,7 +3,6 @@ package se.lisaannica.stopmotion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import android.app.ListActivity;
@@ -14,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -117,8 +115,6 @@ public class MainActivity extends ListActivity {
 		movieName = movies.get((info.position));
 
 		if(item.getItemId() == 0) { //Play movie
-			Log.d("main", "MainActivity, onContextItemSelected, item: " + item.getItemId());
-
 			Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
 			intent.putExtra("gifName", movieName);
 			this.startActivity(intent);
@@ -183,7 +179,6 @@ public class MainActivity extends ListActivity {
 					startActivity(sendTweetIntent);
 				}
 			} catch (TwitterException e) {
-				Log.d("show", "MainActivity, TwitterSetup, doInBackground: Could not set up Twitter connection.");
 				e.printStackTrace();
 			}
 
@@ -215,7 +210,6 @@ public class MainActivity extends ListActivity {
 						new File(screenshotUri.toString()), accessToken.getToken(), accessToken.getTokenSecret());
 				twitter.sendTweet("TestTweet " + twitpicUrl);
 			} catch (TwitterException e) {
-				Log.d("show", "MainActivity, TwitterAuthentication, doInBackground: Could not complete Twitter authentication.");
 				e.printStackTrace();
 			}
 			return null;

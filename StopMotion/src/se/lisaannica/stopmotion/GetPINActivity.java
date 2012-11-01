@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,7 +33,8 @@ public class GetPINActivity extends Activity implements OnClickListener {
     mContinueButton.setOnClickListener(this);
     mCancelButton.setOnClickListener(this);
     
-    Toast.makeText(GetPINActivity.this, getResources().getString(R.string.send_instruction), Toast.LENGTH_LONG).show();
+    int duration = 7000;
+    Toast.makeText(GetPINActivity.this, getResources().getString(R.string.send_instruction), duration).show();
   }
 
   public void onClick(View v) {
@@ -45,7 +45,6 @@ public class GetPINActivity extends Activity implements OnClickListener {
     }
     Intent returnIntent = new Intent();
     returnIntent.putExtra("pin", mEditText.getText().toString());
-    Log.e("TwitterTest", "onClick pin: " + mEditText.getText());
     setResult(RESULT_OK, returnIntent);
     finish();
   }
