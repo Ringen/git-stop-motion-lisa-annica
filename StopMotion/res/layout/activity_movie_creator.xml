@@ -38,14 +38,16 @@
             android:layout_weight="1.0"
             android:onClick="addPic"
             android:text="@string/create_add" />
-
+
         <Button
             android:id="@+id/button_finish"
+            style="@style/GreenTheme"
             android:layout_width="0.0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:onClick="finishMovie"
             android:text="@string/create_finish" />
+
     </LinearLayout>
 
     <TextView
