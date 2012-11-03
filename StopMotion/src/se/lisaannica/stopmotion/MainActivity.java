@@ -3,12 +3,12 @@ package se.lisaannica.stopmotion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter;
 
 /**
  * List of stop motion movies.
- * @author Annica Lindstrom and Lisa Ring
+ * @author Annica Lindström and Lisa Ring
  *
  */
 public class MainActivity extends ListActivity {
@@ -153,7 +153,16 @@ public class MainActivity extends ListActivity {
 			}	
 		}
 		adapter.remove(name);
-	} 
+	}
+	
+	private void sendTweet() {
+		Intent sendTweetIntent = new Intent(MainActivity.this, SendTweetActivity.class);
+		sendTweetIntent.putExtra("token", token);
+		sendTweetIntent.putExtra("tokenSecret", tokenSecret);
+		sendTweetIntent.putExtra("gifPath", movieStorageDir.getPath() + File.separator +
+				movieName + ".gif");
+		startActivity(sendTweetIntent);
+	}
 	
 	/**
 	 * Asynctask for setting up the twitter connection with an intent.
@@ -171,12 +180,7 @@ public class MainActivity extends ListActivity {
 					authIntent.putExtra("url", authorizationUrl);
 					startActivityForResult(authIntent, 0);
 				} else {
-					Intent sendTweetIntent = new Intent(MainActivity.this, SendTweetActivity.class);
-					sendTweetIntent.putExtra("token", token);
-					sendTweetIntent.putExtra("tokenSecret", tokenSecret);
-					sendTweetIntent.putExtra("gifPath", movieStorageDir.getPath() + File.separator +
-							movieName + ".gif");
-					startActivity(sendTweetIntent);
+					sendTweet();
 				}
 			} catch (TwitterException e) {
 				e.printStackTrace();
@@ -199,16 +203,15 @@ public class MainActivity extends ListActivity {
 			try {
 				String pin = data.getStringExtra("pin");
 				AccessToken accessToken = twitter.authenticate(pin);
+				token = accessToken.getToken();
+				tokenSecret = accessToken.getTokenSecret();
 
 				SharedPreferences.Editor edit = prefs.edit();
-				edit.putString("token", accessToken.getToken());
-				edit.putString("tokenSecret", accessToken.getTokenSecret());
+				edit.putString("token", token);
+				edit.putString("tokenSecret", tokenSecret);
 				edit.apply();
 				
-				Uri screenshotUri = Uri.parse(movieStorageDir + File.separator + movieName + ".gif"); 
-				String twitpicUrl = twitter.uploadImage(
-						new File(screenshotUri.toString()), accessToken.getToken(), accessToken.getTokenSecret());
-				twitter.sendTweet("TestTweet " + twitpicUrl);
+				sendTweet();
 			} catch (TwitterException e) {
 				e.printStackTrace();
 			}

@@ -42,11 +42,11 @@ public class GetPINActivity extends Activity implements OnClickListener {
       setResult(RESULT_CANCELED);
       finish();
       return;
+    } else if(v.getId() == R.id.button_continue) {
+    	Intent returnIntent = new Intent();
+        returnIntent.putExtra("pin", mEditText.getText().toString());
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
-    Intent returnIntent = new Intent();
-    returnIntent.putExtra("pin", mEditText.getText().toString());
-    setResult(RESULT_OK, returnIntent);
-    finish();
   }
-
 }
