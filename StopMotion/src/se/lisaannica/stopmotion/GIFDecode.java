@@ -6,6 +6,11 @@ import java.io.InputStream;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 
+/**
+ * 
+ * @author Annica Lindström
+ *
+ */
 public class GIFDecode {
 
 	public static final int STATUS_OK = 0;

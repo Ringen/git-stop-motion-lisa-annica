@@ -23,7 +23,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 
 /**
- * List of stop motion movies.
+ * List of stop motion movies. Main activity for the application.
  * @author Annica Lindström and Lisa Ring
  *
  */
@@ -42,13 +42,16 @@ public class MainActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//where to store movies
 		movieStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "StopMotionMovies");
 		movies = setMovieList(movieStorageDir);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+		//set adapter to use for handle viewpager content
 		adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, movies);
 		setListAdapter(adapter);
 
+		//make it possible to long click on list items (movies)
 		registerForContextMenu(getListView());
 	}
 	
@@ -90,14 +93,13 @@ public class MainActivity extends ListActivity {
 			Intent intent = new Intent(MainActivity.this, MovieCreator.class);
 			this.startActivity(intent);
 		}
-		
-
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view,
 			ContextMenuInfo menuInfo) {
+		//create the content of the context menu
 		super.onCreateContextMenu(menu, view, menuInfo);
 
 		if (view.getId() == getListView().getId()) {
@@ -118,9 +120,11 @@ public class MainActivity extends ListActivity {
 			Intent intent = new Intent(MainActivity.this, MoviePlayer.class);
 			intent.putExtra("gifName", movieName);
 			this.startActivity(intent);
-		} else if (item.getItemId() == 1) { //Share on Twitter
+		} else if (item.getItemId() == 1) { 
+			//Share on Twitter
 			new TwitterSetup().execute();
-		} else if (item.getItemId() == 2) { //Remove movie
+		} else if (item.getItemId() == 2) { 
+			//Remove movie
 			deleteMovie(movieName);
 		} 
 		return super.onContextItemSelected(item);
@@ -155,6 +159,9 @@ public class MainActivity extends ListActivity {
 		adapter.remove(name);
 	}
 	
+	/**
+	 * Send a tweet on twitter
+	 */
 	private void sendTweet() {
 		Intent sendTweetIntent = new Intent(MainActivity.this, SendTweetActivity.class);
 		sendTweetIntent.putExtra("token", token);

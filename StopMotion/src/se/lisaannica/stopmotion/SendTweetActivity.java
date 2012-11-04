@@ -14,6 +14,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity for sending a tweet
+ * @author Annica Lindström and Lisa Ring
+ *
+ */
 public class SendTweetActivity extends Activity{
 
 	private TwitterConnection twitter;
@@ -32,17 +37,28 @@ public class SendTweetActivity extends Activity{
 		gifPath = getIntent().getStringExtra("gifPath");
 	}
 
+	/**
+	 * Onclick listener for buttons
+	 * @param v
+	 */
 	public void tweetOnClick (View v) {
 		System.out.println("In onclick");
 
 		if (v.getId() == R.id.button_send_tweet) {
+			//send the tweet
 			new TweetSender().execute();
 		} else if(v.getId() == R.id.button_dont_send) {
+			//discard the tweet, don't send
 			Intent intent = new Intent(SendTweetActivity.this, MainActivity.class);
 			startActivity(intent);
 		}
 	}
 
+	/**
+	 * AsyncTask for sending the tweet in its own thread
+	 * @author Lisa
+	 *
+	 */
 	private class TweetSender extends AsyncTask<Intent, Integer, Boolean> {
 
 		private ProgressDialog pd;
@@ -52,6 +68,7 @@ public class SendTweetActivity extends Activity{
 			EditText et = (EditText) findViewById(R.id.editText_tweet_text);
 
 			try {
+				//Create a connection and send tweet
 				twitter = new TwitterConnection(getResources());
 				twitter.setup();
 				
@@ -66,13 +83,13 @@ public class SendTweetActivity extends Activity{
 		}
 		@Override
 		protected void onPreExecute() {
-			//Shows the dialog
+			//Show progress dialog
 			pd = ProgressDialog.show(SendTweetActivity.this, "", getResources().getString(R.string.send_tweet_sending)); 
 		}
 		
 		@Override
 		protected void onPostExecute(Boolean result) {
-			//Closes the dialog
+			//Closes the progress dialog
 			pd.dismiss();
 			
 			Toast.makeText(SendTweetActivity.this, R.string.send_tweet_sent, Toast.LENGTH_LONG).show();

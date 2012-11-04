@@ -11,6 +11,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
+/**
+ * 
+ * @author Annica Lindström
+ *
+ */
 public class GifRun implements Runnable, Callback {
 	public Bitmap bmb;
 	public GIFDecode decode;

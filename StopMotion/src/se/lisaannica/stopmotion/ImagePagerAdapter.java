@@ -75,6 +75,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 	
 	@Override
 	public CharSequence getPageTitle(int position) {
+		//the title over each image in the viewpager
 		CharSequence title = "Image " + (position+1) + "/" + images.size();
 		return title;
 	}
